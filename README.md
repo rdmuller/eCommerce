@@ -1,7 +1,7 @@
 ![badge-dot-net]
 ![badge-windows]
 ![badge-visual-studio]
-[MicrosoftSQLServer]
+![MicrosoftSQLServer]
 
 # eCommerce
 Aplicação criada para estudos envolvendo:
