@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using eCommerce.Application.Commen.Bases;
+using eCommerce.Application.Common.Bases;
 using eCommerce.Application.DTOs.Departments;
 using eCommerce.Domain.Repositories.Users;
 using MediatR;

@@ -1,4 +1,4 @@
-﻿namespace eCommerce.Application.Commen.Bases;
+﻿namespace eCommerce.Application.Common.Bases;
 public class BaseResponse<T> : BaseReponseGeneric<T>
 {
 }

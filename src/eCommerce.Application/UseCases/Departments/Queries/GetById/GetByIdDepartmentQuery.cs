@@ -1,4 +1,4 @@
-﻿using eCommerce.Application.Commen.Bases;
+﻿using eCommerce.Application.Common.Bases;
 using eCommerce.Application.DTOs.Departments;
 using MediatR;
 

@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace eCommerce.Application.Commen.Bases;
+namespace eCommerce.Application.Common.Bases;
 public class BaseReponseGeneric<T>
 {
     public T? Data { get; set; }

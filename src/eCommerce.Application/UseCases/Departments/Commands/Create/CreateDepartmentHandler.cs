@@ -1,4 +1,4 @@
-﻿using eCommerce.Application.Commen.Bases;
+﻿using eCommerce.Application.Common.Bases;
 using MediatR;
 
 namespace eCommerce.Application.UseCases.Departments.Commands.Create;
