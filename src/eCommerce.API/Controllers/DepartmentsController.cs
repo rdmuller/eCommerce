@@ -1,5 +1,8 @@
-﻿using eCommerce.Application.DTOs.Departments;
+﻿using eCommerce.Application.Common.Bases;
+using eCommerce.Application.DTOs.Departments;
 using eCommerce.Application.UseCases.Departments.Commands.Create;
+using eCommerce.Application.UseCases.Departments.Commands.Delete;
+using eCommerce.Application.UseCases.Departments.Commands.Update;
 using eCommerce.Application.UseCases.Departments.Queries.GetById;
 using eCommerce.Application.UseCases.Departments.Queries.GetList;
 using MediatR;
@@ -25,11 +28,13 @@ public class DepartmentsController : ControllerBase
         if (response.Data is null)
             return NoContent();
 
-        return Ok(response); 
+        return Ok(response);
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAllAsync([FromQuery]int? pageNumber, [FromQuery]int? pageSize)
+    [ProducesResponseType(typeof(BaseResponse<IEnumerable<DepartmentSimpleQueryDTO>>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> GetAllAsync([FromQuery] int? pageNumber, [FromQuery] int? pageSize)
     {
         var response = await _mediator.Send(new GetListDepartmentQuery() { PageNumber = pageNumber, PageSize = pageSize });
         if (response.Data is null)
@@ -39,10 +44,32 @@ public class DepartmentsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create([FromBody]DepartmentCommandDTO request)
+    [ProducesResponseType(typeof(BaseResponseError), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(BaseResponse<string>), StatusCodes.Status201Created)]
+    public async Task<IActionResult> Create([FromBody] BaseRequest<DepartmentCommandDTO> request)
     {
-        var response = await _mediator.Send(new CreateDepartmentCommand() { Data = request });
+        var response = await _mediator.Send(new CreateDepartmentCommand() { Data = request.Data });
 
-        return Ok(response);
+        return Created(String.Empty, response);
+    }
+
+    [HttpPut("{departmentId}")]
+    [ProducesResponseType(typeof(BaseResponseError), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    public async Task<IActionResult> Update([FromBody]BaseRequest<DepartmentCommandDTO> request, [FromRoute]long departmentId)
+    {
+        request.Data!.Id = departmentId;
+
+        var response = await _mediator.Send(new UpdateDepartmentCommand() { Data = request.Data });
+
+        return NoContent();
+    }
+
+    [HttpDelete("{departmentId}")]
+    public async Task<IActionResult> Delete([FromRoute]long departmentId)
+    {
+        var response = await _mediator.Send(new DeleteDepartmentCommand() { id = departmentId });
+
+        return NoContent();
     }
 }

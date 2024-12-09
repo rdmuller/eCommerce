@@ -1,5 +1,9 @@
-﻿namespace eCommerce.Application.DTOs.Departments;
-public record class DepartmentCommandDTO
+﻿using System.Text.Json.Serialization;
+
+namespace eCommerce.Application.DTOs.Departments;
+public class DepartmentCommandDTO
 {
-    public string? Name { get; init; } = string.Empty;
+    [JsonIgnore(Condition = JsonIgnoreCondition.Always)]
+    public long? Id { get; set; }
+    public string Name { get; init; } = string.Empty;
 }

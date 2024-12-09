@@ -2,8 +2,8 @@
 using eCommerce.Application.DTOs.Departments;
 using MediatR;
 
-namespace eCommerce.Application.UseCases.Departments.Commands.Create;
-public class CreateDepartmentCommand : IRequest<BaseResponse<string>>
+namespace eCommerce.Application.UseCases.Departments.Commands.Update;
+public class UpdateDepartmentCommand : IRequest<BaseResponse<string>>
 {
     public DepartmentCommandDTO? Data { get; set; }
 }

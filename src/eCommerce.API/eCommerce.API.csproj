@@ -19,4 +19,8 @@
     <ProjectReference Include="..\eCommerce.Infra.IoC\eCommerce.Infra.IoC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+  </ItemGroup>
+
 </Project>

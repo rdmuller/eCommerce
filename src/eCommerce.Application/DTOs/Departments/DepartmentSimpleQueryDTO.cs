@@ -1,7 +1,7 @@
 ﻿using System.Text.Json.Serialization;
 
 namespace eCommerce.Application.DTOs.Departments;
-public record DepartmentQueryDTO
+public record DepartmentSimpleQueryDTO
 {
     [JsonPropertyName("department_id")]
     public long DepartmentId { get; init; }

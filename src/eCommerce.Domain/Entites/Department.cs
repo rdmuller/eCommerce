@@ -9,4 +9,6 @@ public class Department : BaseEntity
     {
         Name = name;
     }
+
+    public void Update(string name) => Name = name;
 }
