@@ -6,12 +6,14 @@ using eCommerce.Application.UseCases.Departments.Commands.Update;
 using eCommerce.Application.UseCases.Departments.Queries.GetById;
 using eCommerce.Application.UseCases.Departments.Queries.GetList;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace eCommerce.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
+[Authorize]
 public class DepartmentsController : ControllerBase
 {
     private readonly IMediator _mediator;

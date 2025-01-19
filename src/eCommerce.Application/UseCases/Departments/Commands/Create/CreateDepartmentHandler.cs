@@ -9,12 +9,12 @@ namespace eCommerce.Application.UseCases.Departments.Commands.Create;
 public class CreateDepartmentHandler : IRequestHandler<CreateDepartmentCommand, BaseResponse<string>>
 {
     private readonly IMapper _mapper;
-    private readonly IDepartmentWriteOnlyRepository _repository;
+    private readonly IDepartmentWriteOnlyRepository _departmentRepository;
     private readonly IUnitOfWork _unitOfWork;
 
-    public CreateDepartmentHandler(IDepartmentWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateDepartmentHandler(IDepartmentWriteOnlyRepository departmentRepository, IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _repository = repository;
+        _departmentRepository = departmentRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper ?? throw new ArgumentException(nameof(mapper));
     }
@@ -22,7 +22,7 @@ public class CreateDepartmentHandler : IRequestHandler<CreateDepartmentCommand, 
     public async Task<BaseResponse<string>> Handle(CreateDepartmentCommand request, CancellationToken cancellationToken)
     {
         var department = new Department(0, request.Data!.Name);
-        await _repository.AddAsync(department);
+        await _departmentRepository.AddAsync(department);
 
         await _unitOfWork.CommitAsync();
 

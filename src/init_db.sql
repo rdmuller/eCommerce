@@ -1,234 +1,184 @@
-﻿Estoque
-{
-	//-----------------------------------------------------------------------------------------------//
-	// L O T E 
-	//-----------------------------------------------------------------------------------------------//
-	
-	[RestMethod(POST)]
-	[RestPath("v1/lotes")]
-	IncluirLote(in:&doc, in:&lote, out:&output_schema)
-	=> BaseERP.Estoque.GravarLote(&SdtSessao, &lote_id, &lote, &output_schema, &RestCode);
-	
-	[RestMethod(PUT)]
-	[RestPath("v1/lotes/{&lote_id}")]
-	IncluirLote(in:&doc, in:&lote_id, in:&lote, out:&output_schema)
-	=> BaseERP.Estoque.GravarLote(&SdtSessao, &lote_id, &lote, &output_schema, &RestCode);
-	
-	[RestMethod(DELETE)]
-	[RestPath("v1/lotes/{&lote_id}")]
-	ExcluirLote(in:&lote_id, out:&output_schema)
-	=> BaseERP.Estoque.ExcluirLote(&SdtSessao, &lote_id, &output_schema, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/lotes/{&lote_id}")]
-	RetSdtLote(in:&lote_id, out:&lote, out:&output_schema)
-	=> BaseERP.Estoque.RetSdtLote(&SdtSessao, &lote_id, 0, "", &lote, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/lotes")]
-	RetListaLotes(in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&lotes)
-	=> BaseERP.Estoque.RetSdtLotes(&SdtSessao, &SdtInputGet, &lotes, &RestCode);
-	
-	//-----------------------------------------------------------------------------------------------//
-	// M O V I M E N T O
-	//-----------------------------------------------------------------------------------------------//
+﻿CREATE TABLE [AspNetRoles] (
+    [Id] nvarchar(450) NOT NULL,
+    [Name] nvarchar(256) NULL,
+    [NormalizedName] nvarchar(256) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoles] PRIMARY KEY ([Id])
+);
+GO
 
-	[RestMethod(POST)]
-	[RestPath("v1/movimentos")]
-	IncluirMovimento(in:&doc, in:&movimento_estoque, out:&output_schema)
-	=> BaseERP.Estoque.IncluirMovimento(&SdtSessao, &movimento_estoque, true, &output_schema, &RestCode);
-	
-	[RestMethod(DELETE)]
-	[RestPath("v1/movimentos/{&movimento_id}")]
-	ExcluirMovimento(in:&movimento_id, out:&output_schema)
-	=> BaseERP.Estoque.ExcluirMovimento(&SdtSessao, &movimento_id, true, &output_schema, &RestCode);
-	
-	[Description("Retornar movimentos do estoque")]
-	[RestMethod(GET)]
-	[RestPath("v1/movimentos")]
-	RetListaMovimentos(in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&movimentos)
-	=> BaseERP.Estoque.RetSdtMovimentos(&SdtSessao, &SdtInputGet, &movimentos, &RestCode);
-	
-	//-----------------------------------------------------------------------------------------------//
-	// S A L D O S
-	//-----------------------------------------------------------------------------------------------//
-	
-	[RestMethod(POST)]
-	[RestPath("v1/saldos-reprocessar")]
-	ReprocessarSaldo(in:&doc, in:&reprocessar_saldo, out:&output_schema)
-	=> BaseERP.Estoque.ReprocessarSaldo(&SdtSessao, &reprocessar_saldo, true, &output_schema, &RestCode);
 
-	[Description("Retornar o saldo por produto-AX-PE-lote")]
-	[RestMethod(GET)]
-	[RestPath("v1/saldos/produto/{&produto_id}")]
-	RetListaProdutoSaldos(in:&produto_id, in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&saldos)
-	=> BaseERP.Estoque.RetSdtProdutoSaldos(&SdtSessao, &SdtInputGet, &produto_id, &saldos, &RestCode);
-	
-	//-----------------------------------------------------------------------------------------------//
-	// B A L A N Ç O
-	//-----------------------------------------------------------------------------------------------//
-	
-	[RestMethod(POST)]
-	[RestPath("v1/balancos")]
-	IncluirBalanco(in:&doc, in:&balanco, out:&output_schema)	
-	=> BaseERP.Estoque.GravarBalanco(&SdtSessao, &balanco_id, &balanco, &output_schema, &RestCode);
-	
-	[RestMethod(PUT)]
-	[RestPath("v1/balancos/{&balanco_id}")]
-	AlterarBalanco(in:&doc, in:&balanco_id, in:&balanco, out:&output_schema)
-	=> BaseERP.Estoque.GravarBalanco(&SdtSessao, &balanco_id, &balanco, &output_schema, &RestCode);
-	
-	[RestMethod(DELETE)]
-	[RestPath("v1/balancos/{&balanco_id}")]
-	ExcluirBalanco(in:&balanco_id, out:&output_schema)	
-	=> BaseERP.Estoque.ExcluirBalanco(&SdtSessao, &balanco_id, &output_schema, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/balancos/{&balanco_id}")]
-	RetSdtBalanco(in:&balanco_id, out:&balanco, out:&output_schema)
-	=> BaseERP.Estoque.RetSdtBalanco(&SdtSessao, &balanco_id, &balanco, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/balancos")]
-	RetListaBalancos(in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&balancos)
-	=> BaseERP.Estoque.RetSdtBalancos(&SdtSessao, &SdtInputGet, &balancos, &RestCode);
+CREATE TABLE [AspNetUsers] (
+    [Id] nvarchar(450) NOT NULL,
+    [UserName] nvarchar(256) NULL,
+    [NormalizedUserName] nvarchar(256) NULL,
+    [Email] nvarchar(256) NULL,
+    [NormalizedEmail] nvarchar(256) NULL,
+    [EmailConfirmed] bit NOT NULL,
+    [PasswordHash] nvarchar(max) NULL,
+    [SecurityStamp] nvarchar(max) NULL,
+    [ConcurrencyStamp] nvarchar(max) NULL,
+    [PhoneNumber] nvarchar(max) NULL,
+    [PhoneNumberConfirmed] bit NOT NULL,
+    [TwoFactorEnabled] bit NOT NULL,
+    [LockoutEnd] datetimeoffset NULL,
+    [LockoutEnabled] bit NOT NULL,
+    [AccessFailedCount] int NOT NULL,
+    CONSTRAINT [PK_AspNetUsers] PRIMARY KEY ([Id])
+);
+GO
 
-	[RestMethod(POST)]
-	[RestPath("v1/balancos/{&balanco_id}/produtos/")]
-	GravarBalancoProdutos(in:&doc, in:&balanco_id, in:&produtos, out:&output_schema)
-	=> BaseERP.Estoque.GravarBalancoProdutos(&SdtSessao, &produtos, &balanco_id, "M", &output_schema, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/balancos/{&balanco_id}/produtos/{&produto_id}")]
-	RetSdtBalancoProduto(in:&balanco_id, in:&produto_id, out:&balanco_produtos, out:&output_schema)
-	=> BaseERP.Estoque.RetSdtBalancoProduto(&SdtSessao, &balanco_id, &produto_id, &balanco_produtos, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/balancos/{&balanco_id}/produtos")]
-	RetListaBalancoProdutos(in:&balanco_id, in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&balancos_produtos)
-	=> BaseERP.Estoque.RetSdtBalancoProdutos(&SdtSessao, &SdtInputGet, &balanco_id, True, &balancos_produtos, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/balancos/produtos/list")]
-	RetListaBalancosProdutos(in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&balancos_produtos)
-	=> BaseERP.Estoque.RetSdtBalancoProdutos(&SdtSessao, &SdtInputGet, &balanco_id, False, &balancos_produtos, &RestCode);
-	
-	[RestMethod(POST)]
-	[RestPath("v1/balancos/ajustes/gerar")]
-	GerarBalancoAjustes(in:&doc, in:&ajuste_balanco, out:&output_schema)
-	=> BaseERP.Estoque.GerarBalancoAjustes(&SdtSessao, &ajuste_balanco, &output_schema, &RestCode);
-	
-	[RestMethod(POST)]
-	[RestPath("v1/balancos/ajustes/estornar")]
-	GerarBalancoEstornos(in:&doc, in:&ajuste_balanco, out:&output_schema)
-	=> BaseERP.Estoque.GerarBalancoEstornos(&SdtSessao, &ajuste_balanco, &output_schema, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/balancos/exportar/xlsx")]
-	GerarBalancoXlsx(in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&balancos_produtos)
-	=> BaseERP.Estoque.RetXlsxBalancoProdutos(&SdtSessao, &SdtInputGet, &balancos_produtos, &RestCode);
-	
-	[RestMethod(POST)]
-	[RestPath("v1/balancos/importar/xlsx")]
-	ImportarBalancoXlsx(in:&doc, in:&xlsx_base64, out:&output_schema)
-	=> BaseERP.Estoque.ImportarBalancoProdutos(&SdtSessao, &xlsx_base64, &output_schema, &RestCode);
-	
-	//-----------------------------------------------------------------------------------------------//
-	// I N V E N T Á R I O 
-	//-----------------------------------------------------------------------------------------------//
 
-	[RestMethod(POST)]
-	[RestPath("v1/inventarios")]
-	GerarInventario(in:&doc, in:&inventario, out:&output_schema)
-	=> BaseERP.Estoque.GerarInventario(&SdtSessao, &inventario, False, &output_schema, &RestCode);
-	
-	[RestMethod(DELETE)]
-	[RestPath("v1/inventarios")]
-	ExcluirInventario(in:&almoxarifado_id, in:&ano, in:&mes,out:&output_schema)
-	=> BaseERP.Estoque.ExcluirInventario(&SdtSessao, &almoxarifado_id, &ano, &mes, &output_schema, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/inventarios")]
-	RetListaInventarios(in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&inventarios)
-	=> BaseERP.Estoque.RetSdtInventarios(&SdtSessao, &SdtInputGet, &inventarios, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/inventarios/produtos")]
-	RetListaInventarioProdutos(in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&inventario_produtos)
-	=> BaseERP.Estoque.RetSdtInventarioProdutos(&SdtSessao, &SdtInputGet, &inventario_produtos, &RestCode);
-	
-	[RestMethod(PUT)]
-	[RestPath("v1/inventarios/produtos/valores")]
-	GerarInventarioProdutoValor(in:&doc, in:&doc, in:&inventario_produto_valor, out:&output_schema)
-	=> BaseERP.Estoque.AtualizarInventarioProdutoValor(&SdtSessao, &inventario_produto_valor, &output_schema, &RestCode);
-	
-	[RestMethod(POST)]
-	[RestPath("v1/inventarios/ajustes-financeiros")]
-	GerarInventarioAjustes(in:&doc, in:&inventario, out:&output_schema)
-	=> BaseERP.Estoque.GerarInventarioAjustes(&SdtSessao, &inventario, &output_schema, &RestCode);
-	
-	[RestMethod(DELETE)]
-	[RestPath("v1/inventarios/ajustes-financeiros")]
-	ExcluirInventarioAjustes(in:&almoxarifado_id, in:&ano, in:&mes, out:&output_schema)
-	=> BaseERP.Estoque.ExcluirInventarioAjustes(&SdtSessao, &almoxarifado_id, &ano, &mes, &output_schema, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/inventarios/exportar/xlsx")]
-	GerarInventarioProdutosXlsx(in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&inventario_produtos)
-	=> BaseERP.Estoque.RetXlsxInventarioProdutos(&SdtSessao, &SdtInputGet, &inventario_produtos, &RestCode);
-	
-	[RestMethod(POST)]
-	[RestPath("v1/inventarios/importar/xlsx")]
-	ImportarInventarioXlsx(in:&doc, in:&xlsx_base64, out:&output_schema)
-	=> BaseERP.Estoque.ImportarInventarioProdutos(&SdtSessao, &xlsx_base64, &output_schema, &RestCode);
-	
-	//-----------------------------------------------------------------------------------------------//
-	// R E C L A S S I F I C A Ç Ã O 
-	//-----------------------------------------------------------------------------------------------//
-	
-	[Description("Incluir uma reclassificacao")]
-	[RestMethod(POST)]
-	[RestPath("v1/reclassificacoes/incluir")]
-	IncluirReclassificacao(in:&doc, in:&reclassificacao, out:&output_schema)
-	=> BaseERP.Estoque.GravarReclassificacao(&SdtSessao, &reclassificacao, &output_schema, &RestCode);
-	
-	[Description("Estornar uma reclassificacao")]
-	[RestMethod(POST)]
-	[RestPath("v1/reclassificacoes/estornar/{&reclassificacao_id}")]
-	EstornarReclassificacao(in:&doc, in:&reclassificacao_id, out:&output_schema)
-	=> BaseERP.Estoque.EstornarReclassificacao(&SdtSessao, &reclassificacao_id, &output_schema, &RestCode);
-	
-	[RestMethod(GET)]
-	[RestPath("v1/reclassificacoes")]
-	RetListaReclassificacoes(in:&full_search, in:&page_num, in:&page_rows, in:&omit, in:&fields, in:&query, in:&sort, in:&doc, in:&status, out:&reclassificacoes)
-	=> BaseERP.Estoque.RetSdtReclassificacoes(&SdtSessao, &SdtInputGet, &reclassificacoes, &RestCode);
+CREATE TABLE [Departments] (
+    [Id] bigint NOT NULL IDENTITY,
+    [Name] nvarchar(128) NOT NULL,
+    [CreatedDate] datetimeoffset NULL,
+    [UpdatedDate] datetimeoffset NULL,
+    CONSTRAINT [PK_Departments] PRIMARY KEY ([Id])
+);
+GO
 
-	//-----------------------------------------------------------------------------------------------//
-	// X X X X X X X X X
-	//-----------------------------------------------------------------------------------------------//
-	
-	//[RestMethod(POST)]
-	//[RestPath("v1/xxxxxxx")]
-	//IncluirXxxxxxx(in:&doc, out:&output_schema)
-	//=> Estoque.GravarXxxxxxx(&SdtSessao, &output_schema, &RestCode);	
-	
-	//[RestMethod(PUT)]
-	//[RestPath("v1/xxxxxxx")]
-	//AlterarXxxxxxx(in:&doc, out:&output_schema)
-	//=> Estoque.GravarXxxxxxx(&SdtSessao, &output_schema, &RestCode);	
-	
-	//[RestMethod(DELETE)]
-	//[RestPath("v1/xxxxxxx")]
-	//ExcluirXxxxxxx(out:&output_schema)
-	//=> Estoque.ExcluirXxxxxxx(&SdtSessao, &output_schema, &RestCode);
-	
-	//[RestMethod(GET)]
-	//[RestPath("v1/xxxxxxx")]
-	//RetSdtXxxxxxx(out:&output_schema)
-	//=> Estoque.RetSdtXxxxxxx(&SdtSessao, &output_schema, &RestCode);
 
-	//[RestMethod(GET)]
-	//[RestPath("v1/xxxxxxx/list")]
-	//DPRetXxxxxxx(out:&output_schema)
-	//=> Estoque.DPRetXxxxxxx(&SdtSessao, &output_schema, &RestCode);
-}
+CREATE TABLE [Users] (
+    [Id] bigint NOT NULL IDENTITY,
+    [Name] nvarchar(128) NOT NULL,
+    [Email] nvarchar(128) NOT NULL,
+    [Sex] int NOT NULL,
+    [RG] nvarchar(10) NULL,
+    [CPF] nvarchar(15) NULL,
+    [MotherName] nvarchar(128) NOT NULL,
+    [FatherName] nvarchar(128) NOT NULL,
+    [Status] int NOT NULL,
+    [Role] int NOT NULL,
+    [CreatedDate] datetimeoffset NULL,
+    [UpdatedDate] datetimeoffset NULL,
+    CONSTRAINT [PK_Users] PRIMARY KEY ([Id]),
+    CONSTRAINT [AK_Users_Email] UNIQUE ([Email])
+);
+GO
+
+
+CREATE TABLE [AspNetRoleClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [RoleId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
+);
+GO
+
+
+CREATE TABLE [AspNetUserClaims] (
+    [Id] int NOT NULL IDENTITY,
+    [UserId] nvarchar(450) NOT NULL,
+    [ClaimType] nvarchar(max) NULL,
+    [ClaimValue] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserClaims] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_AspNetUserClaims_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+
+CREATE TABLE [AspNetUserLogins] (
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [ProviderKey] nvarchar(450) NOT NULL,
+    [ProviderDisplayName] nvarchar(max) NULL,
+    [UserId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserLogins] PRIMARY KEY ([LoginProvider], [ProviderKey]),
+    CONSTRAINT [FK_AspNetUserLogins_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+
+CREATE TABLE [AspNetUserRoles] (
+    [UserId] nvarchar(450) NOT NULL,
+    [RoleId] nvarchar(450) NOT NULL,
+    CONSTRAINT [PK_AspNetUserRoles] PRIMARY KEY ([UserId], [RoleId]),
+    CONSTRAINT [FK_AspNetUserRoles_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_AspNetUserRoles_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+
+CREATE TABLE [AspNetUserTokens] (
+    [UserId] nvarchar(450) NOT NULL,
+    [LoginProvider] nvarchar(450) NOT NULL,
+    [Name] nvarchar(450) NOT NULL,
+    [Value] nvarchar(max) NULL,
+    CONSTRAINT [PK_AspNetUserTokens] PRIMARY KEY ([UserId], [LoginProvider], [Name]),
+    CONSTRAINT [FK_AspNetUserTokens_AspNetUsers_UserId] FOREIGN KEY ([UserId]) REFERENCES [AspNetUsers] ([Id]) ON DELETE CASCADE
+);
+GO
+
+
+CREATE TABLE [DeliveryAddresses] (
+    [Id] bigint NOT NULL IDENTITY,
+    [UserId] int NOT NULL,
+    [Name] nvarchar(max) NOT NULL,
+    [ZipCode] int NOT NULL,
+    [State] nvarchar(max) NOT NULL,
+    [City] nvarchar(max) NOT NULL,
+    [Neighborhood] nvarchar(max) NOT NULL,
+    [Address] nvarchar(max) NOT NULL,
+    [Number] int NOT NULL,
+    [complement] nvarchar(max) NULL,
+    [UserId1] bigint NULL,
+    [CreatedDate] datetimeoffset NULL,
+    [UpdatedDate] datetimeoffset NULL,
+    CONSTRAINT [PK_DeliveryAddresses] PRIMARY KEY ([Id]),
+    CONSTRAINT [FK_DeliveryAddresses_Users_UserId1] FOREIGN KEY ([UserId1]) REFERENCES [Users] ([Id])
+);
+GO
+
+
+CREATE TABLE [DepartmentUser] (
+    [DepartmentsId] bigint NOT NULL,
+    [UsersId] bigint NOT NULL,
+    CONSTRAINT [PK_DepartmentUser] PRIMARY KEY ([DepartmentsId], [UsersId]),
+    CONSTRAINT [FK_DepartmentUser_Departments_DepartmentsId] FOREIGN KEY ([DepartmentsId]) REFERENCES [Departments] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_DepartmentUser_Users_UsersId] FOREIGN KEY ([UsersId]) REFERENCES [Users] ([Id]) ON DELETE CASCADE
+);
+GO
+
+
+CREATE INDEX [IX_AspNetRoleClaims_RoleId] ON [AspNetRoleClaims] ([RoleId]);
+GO
+
+
+CREATE UNIQUE INDEX [RoleNameIndex] ON [AspNetRoles] ([NormalizedName]) WHERE [NormalizedName] IS NOT NULL;
+GO
+
+
+CREATE INDEX [IX_AspNetUserClaims_UserId] ON [AspNetUserClaims] ([UserId]);
+GO
+
+
+CREATE INDEX [IX_AspNetUserLogins_UserId] ON [AspNetUserLogins] ([UserId]);
+GO
+
+
+CREATE INDEX [IX_AspNetUserRoles_RoleId] ON [AspNetUserRoles] ([RoleId]);
+GO
+
+
+CREATE INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail]);
+GO
+
+
+CREATE UNIQUE INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName]) WHERE [NormalizedUserName] IS NOT NULL;
+GO
+
+
+CREATE INDEX [IX_DeliveryAddresses_UserId1] ON [DeliveryAddresses] ([UserId1]);
+GO
+
+
+CREATE INDEX [IDepartment1] ON [Departments] ([Name]);
+GO
+
+
+CREATE INDEX [IX_DepartmentUser_UsersId] ON [DepartmentUser] ([UsersId]);
+GO
+
+

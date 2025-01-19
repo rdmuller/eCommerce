@@ -3,8 +3,6 @@
 namespace eCommerce.Application.Common.Exceptions;
 public class ErrorOnValidationException : BaseException
 {
-    public IEnumerable<BaseError> Errors { get; }
-
     public ErrorOnValidationException()
     {
         Errors = new List<BaseError>();

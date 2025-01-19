@@ -16,8 +16,32 @@ public class ExceptionFilter : IExceptionFilter
         else if (context.Exception is ErrorNotFoundException)
             HandleErrorNotFound(context);
 
+        else if (context.Exception is eCommerceException)
+            HandleeCommerceException(context);
+
+        else if (context.Exception is NotAuthorizedException)
+            HandleNotAuthorizedException(context);
+
         else
             ThrowUnknowError(context);
+    }
+
+    private void HandleNotAuthorizedException(ExceptionContext context)
+    {
+        var validationErrors = (NotAuthorizedException)context.Exception;
+        var response = new BaseResponseError(validationErrors.Errors);
+
+        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
+        context.Result = new ObjectResult(response);
+    }
+
+    private void HandleeCommerceException(ExceptionContext context)
+    {
+        var validationErrors = (eCommerceException)context.Exception;
+        var response = new BaseResponseError(validationErrors.Errors);
+
+        context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+        context.Result = new ObjectResult(response);
     }
 
     private void ThrowUnknowError(ExceptionContext context)

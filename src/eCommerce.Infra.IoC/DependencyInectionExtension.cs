@@ -1,8 +1,11 @@
 ﻿using eCommerce.Domain.Repositories;
 using eCommerce.Domain.Repositories.Departments;
 using eCommerce.Domain.Repositories.Users;
+using eCommerce.Domain.Security;
 using eCommerce.Infra.DataAccess;
 using eCommerce.Infra.DataAccess.Repositories;
+using eCommerce.Infra.Security;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
@@ -19,6 +22,27 @@ public static class DependencyInectionExtension
         AddDbContext(services, configuration);
         
         AddRepositories(services);
+        AddServices(services, configuration);
+    }
+
+    private static void AddServices(IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddIdentity<ApplicationUser, IdentityRole>()
+            .AddEntityFrameworkStores<eCommerceDbContext>()
+            .AddDefaultTokenProviders();
+        services.AddScoped<IIdentityService, IdentityService>();
+
+        var expirationTimeMinutes = configuration.GetValue<uint>("Jwt:ExpirationTimeMinutes");
+        var secretKey = configuration.GetValue<string>("Jwt:SecretKey");
+        var issuer = configuration.GetValue<string>("Jwt:Issuer");
+        var audience = configuration.GetValue<string>("Jwt:Audience");
+
+        services.AddScoped<IAccessTokenGenerator, AccessTokenGenerator>(config => new AccessTokenGenerator(
+            expirationTimeMinutes: expirationTimeMinutes,
+            signingKey: secretKey!,
+            audience: audience!,
+            issuer: issuer!
+        ));
     }
 
     private static void AddRepositories(IServiceCollection services)

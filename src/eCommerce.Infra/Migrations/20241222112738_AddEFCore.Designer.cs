@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using eCommerce.Infra.DataAccess;
 
@@ -11,9 +12,11 @@ using eCommerce.Infra.DataAccess;
 namespace eCommerce.Infra.Migrations
 {
     [DbContext(typeof(eCommerceDbContext))]
-    partial class eCommerceDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241222112738_AddEFCore")]
+    partial class AddEFCore
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -251,28 +254,6 @@ namespace eCommerce.Infra.Migrations
                         .HasDatabaseName("IDepartment1");
 
                     b.ToTable("Departments");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1L,
-                            Name = "Moda"
-                        },
-                        new
-                        {
-                            Id = 2L,
-                            Name = "Informática"
-                        },
-                        new
-                        {
-                            Id = 3L,
-                            Name = "Eletrodomésticos"
-                        },
-                        new
-                        {
-                            Id = 4L,
-                            Name = "Automóveis"
-                        });
                 });
 
             modelBuilder.Entity("eCommerce.Domain.Entites.User", b =>

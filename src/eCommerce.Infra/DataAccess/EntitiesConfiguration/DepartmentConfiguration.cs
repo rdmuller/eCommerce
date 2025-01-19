@@ -12,11 +12,11 @@ public class DepartmentConfiguration : IEntityTypeConfiguration<Department>
 
         builder.Property(d => d.Name).IsRequired().HasMaxLength(128);
 
-        /*builder.HasData(
+        builder.HasData(
             new Department(1, "Moda"),
             new Department(2, "Informática"),
             new Department(3, "Eletrodomésticos"),
             new Department(4, "Automóveis")
-        );*/
+        );
     }
 }
